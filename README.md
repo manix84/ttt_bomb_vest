@@ -9,7 +9,7 @@ This is an alternative to the Jihad Bomb, which is increadbly popular in TTT. I'
 
 ## Usage
 1. Install the Addon (preferably with the Steam Workshop)
-    1. Goto ttt_bomb_vest on the Steam Workshop (I'll add this link when I publish)
+    1. Goto [TTT] Bomb Vest on the [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=2166317811)
     - OR
     1. [Download this addon](https://github.com/manix84/ttt_bomb_vest/archive/master.zip)
     2. Place in garrysmod/addons folder (`Steam\steamapps\common\GarrysMod\garrysmod\addons\ttt_bomb_vest`)
