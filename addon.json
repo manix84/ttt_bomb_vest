@@ -1,0 +1,6 @@
+{
+"title" : "[TTT] Bomb Vest",
+"type" : "weapon",
+"tags" : ["fun","realism"],
+"ignore" : ["*.psd", "*.vcproj", "*.svn*", "*.vscode*", "*.git*", "images/*", "*.md", "LICENSE"]
+}

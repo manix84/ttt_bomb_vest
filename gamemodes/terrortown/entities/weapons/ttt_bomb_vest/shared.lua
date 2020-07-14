@@ -4,13 +4,12 @@ SWEP.Contact = "https://steamcommunity.com/id/manix84"
 
 AddCSLuaFile()
 
-local isBuyable = CreateConVar("ttt_bomb_vest_buyable", 1, {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED}, "Should the Bomb Vest be buyable for Traitors?", 0, 1)
-local isLoadout = CreateConVar("ttt_bomb_vest_loadout", 0, {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED}, "Should the Bomb Vest be in the loadout for Traitors?", 0, 1)
-local sound = CreateConVar("ttt_bomb_vest_countdown_sound", "weapons/ttt_bomb_vest/countdown.wav", {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE}, "The sound when triggering the bomb vest.")
-local countdownLength = CreateConVar("ttt_bomb_vest_countdown_length", 2.5, 1, "") 
+local isBuyable = CreateConVar("ttt_bomb_vest_buyable", 1, 1, "Should the Bomb Vest be buyable for Traitors?", 0, 1)
+local isLoadout = CreateConVar("ttt_bomb_vest_loadout", 0, 1, "Should the Bomb Vest be in the loadout for Traitors?", 0, 1)
+local countdownSound = CreateConVar("ttt_bomb_vest_countdown_sound", "weapons/ttt_bomb_vest/countdown.wav", 1, "The sound when triggering the bomb vest.")
+local countdownLength = CreateConVar("ttt_bomb_vest_countdown_length", 2.5, 1, "How long, in seconds, after pulling the trigger before the bomb vest goes bang?") 
 
-resource.AddFile("materials/vgui/ttt/icon_bomb_vest.vmt")
-
+resource.AddFile("materials/VGUI/ttt/icon_bomb_vest.vmt")
 resource.AddFile("sound/weapons/ttt_bomb_vest/explosion.wav")
 resource.AddFile("sound/weapons/ttt_bomb_vest/countdown.wav")
 
@@ -20,7 +19,7 @@ if CLIENT then
 
   SWEP.PrintName = "bomb_vest_name"
   SWEP.Slot = 8
-  SWEP.Icon = "vgui/ttt/icon_bomb_vest"
+  SWEP.Icon = "VGUI/ttt/icon_bomb_vest"
 
   -- Equipment menu information is only needed on the client
   SWEP.EquipMenuData = {
@@ -198,7 +197,7 @@ function SWEP:PrimaryAttack()
       end
     end)
     self:GetOwner():EmitSound(
-      sound:GetString(),
+      countdownSound:GetString(),
       math.random(100, 150),
       math.random(95, 105),
       1,
