@@ -197,7 +197,6 @@ function SWEP:PrimaryAttack()
         self:Explode()
       end
     end)
-    print(sound:GetString())
     self:GetOwner():EmitSound(
       sound:GetString(),
       math.random(100, 150),
