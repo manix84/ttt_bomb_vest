@@ -48,10 +48,10 @@ SWEP.HoldType = "slam"
 SWEP.UseHands = true
 SWEP.DrawAmmo = false
 SWEP.ViewModelFlip = false
-SWEP.ViewModelFOV = 54
+SWEP.ViewModelFOV = 60
 
-SWEP.ViewModel			= "models/weapons/v_slam.mdl"
-SWEP.WorldModel			= "models/weapons/w_slam.mdl"
+SWEP.ViewModel  = "models/weapons/v_slam.mdl"
+SWEP.WorldModel = "models/weapons/w_c4.mdl"
 
 --[[TTT config values]]--
 
