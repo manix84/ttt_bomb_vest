@@ -3,9 +3,9 @@
 
 > Walk into a crowded room. Click... 3, 2, 1, Boom!
 
-There is always a server of friends who have realised that grouping together is the best way to survive a round of TTT. This weapon allows the traitors to take advantage of that, and purhaps teach your friends that it's not safe to group up like that any more.
+There is always a server of friends who have realised that grouping together is the best way to survive a round of TTT. This weapon allows the traitors to take advantage of that, and perhaps teach your friends that it's not safe to group up like that any more.
 
-This is an alternative to the Jihad Bomb, which is increadbly popular in TTT. I'm really not comfortable with the name, the description, of the sound effect from this addon, and I struggled to find an alternative for my after work gaming sessions. 
+This is an alternative to the Jihad Bomb, which is incredibly popular in TTT. I'm really not comfortable with the name, the description, of the sound effect from this add-on, and I struggled to find an alternative for my after work gaming sessions.
 
 ## Usage
 1. Install the Addon (preferably with the Steam Workshop)
