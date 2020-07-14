@@ -6,12 +6,12 @@ AddCSLuaFile()
 
 local isBuyable = CreateConVar("ttt_bomb_vest_buyable", 1, 1, "Should the Bomb Vest be buyable for Traitors?", 0, 1)
 local isLoadout = CreateConVar("ttt_bomb_vest_loadout", 0, 1, "Should the Bomb Vest be in the loadout for Traitors?", 0, 1)
-local countdownSound = CreateConVar("ttt_bomb_vest_countdown_sound", "weapons/ttt_bomb_vest/countdown.wav", 1, "The sound when triggering the bomb vest.")
+local countdownSound = CreateConVar("ttt_bomb_vest_countdown_sound", "weapons/bomb_vest/countdown.wav", 1, "The sound when triggering the bomb vest.")
 local countdownLength = CreateConVar("ttt_bomb_vest_countdown_length", 2.5, 1, "How long, in seconds, after pulling the trigger before the bomb vest goes bang?") 
 
 resource.AddFile("materials/VGUI/ttt/icon_bomb_vest.vmt")
-resource.AddFile("sound/weapons/ttt_bomb_vest/explosion.wav")
-resource.AddFile("sound/weapons/ttt_bomb_vest/countdown.wav")
+resource.AddFile("sound/weapons/bomb_vest/explosion.wav")
+resource.AddFile("sound/weapons/bomb_vest/countdown.wav")
 
 if CLIENT then
   LANG.AddToLanguage("english", "bomb_vest_name", "Bomb Vest")
@@ -89,8 +89,8 @@ SWEP.NoSights = true
 
 -- precache sounds and models
 function SWEP:Precache()
-  util.PrecacheSound("weapons/ttt_bomb_vest/countdown.wav")
-  util.PrecacheSound("weapons/ttt_bomb_vest/explosion.wav")
+  util.PrecacheSound("weapons/bomb_vest/countdown.wav")
+  util.PrecacheSound("weapons/bomb_vest/explosion.wav")
 
   util.PrecacheModel("models/humans/charple01.mdl")
   util.PrecacheModel("models/humans/charple02.mdl")
@@ -216,7 +216,7 @@ function SWEP:Explode()
   local r_outer = r_inner * 1.15
 
   self:EmitSound(
-    "weapons/ttt_bomb_vest/explosion.wav",
+    "weapons/bomb_vest/explosion.wav",
     400,
     math.random(100, 125),
     1,
