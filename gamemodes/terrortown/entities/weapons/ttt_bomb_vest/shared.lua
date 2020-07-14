@@ -4,7 +4,7 @@ SWEP.Contact = "https://steamcommunity.com/id/manix84"
 
 AddCSLuaFile()
 
-local buyable = CreateConVar("ttt_bomb_vest_buyable", 1, {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED}, "Should the Bomb Vest be buyable for Traitors?", 0, 1)
+local isBuyable = CreateConVar("ttt_bomb_vest_buyable", 1, {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED}, "Should the Bomb Vest be buyable for Traitors?", 0, 1)
 local isLoadout = CreateConVar("ttt_bomb_vest_loadout", 0, {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED}, "Should the Bomb Vest be in the loadout for Traitors?", 0, 1)
 local sound = CreateConVar("ttt_bomb_vest_countdown_sound", "weapons/ttt_bomb_vest/countdown.wav", {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE}, "The sound when triggering the bomb vest.")
 local countdownLength = CreateConVar("ttt_bomb_vest_countdown_length", 2.5, 1, "") 
@@ -14,7 +14,7 @@ resource.AddFile("materials/vgui/ttt/icon_bomb_vest.vmt")
 resource.AddFile("sound/weapons/ttt_bomb_vest/explosion.wav")
 resource.AddFile("sound/weapons/ttt_bomb_vest/countdown.wav")
 
-if not SERVER then
+if CLIENT then
   LANG.AddToLanguage("english", "bomb_vest_name", "Bomb Vest")
   LANG.AddToLanguage("english", "bomb_vest_desc", "Walk into a crowded room, click, 3-2-1-Boom.\n\nSingle use.")
 
@@ -64,7 +64,7 @@ SWEP.Kind = WEAPON_ROLE
 -- then this gun can be spawned as a random weapon.
 SWEP.AutoSpawnable = false
 
-if (buyable:GetBool()) then
+if (isBuyable:GetBool()) then
   -- CanBuy is a table of ROLE_* entries like ROLE_TRAITOR and ROLE_DETECTIVE. If
   -- a role is in this table, those players can buy this.
   SWEP.CanBuy = { ROLE_TRAITOR }
@@ -259,10 +259,10 @@ function SWEP:SphereDamage(dmgowner, center, radius)
   local d = 0.0
   local diff = nil
   local dmg = 0
-  for _, ent in pairs(player.GetAll()) do
-    if (IsValid(ent) and ent:Team() == TEAM_TERROR) then
+  for _, target_ply in pairs(player.GetAll()) do
+    if (IsValid(target_ply) and target_ply:Team() == TEAM_TERROR) then
       -- get the squared length of the distance, so we don't have to calculate the square root
-      diff = center - ent:GetPos()
+      diff = center - target_ply:GetPos()
       d = diff:LengthSqr()
 
       if d < r then
@@ -276,9 +276,9 @@ function SWEP:SphereDamage(dmgowner, center, radius)
         -- dmginfo:SetInflictor(self)
         dmginfo:SetDamageType(DMG_BLAST)
         dmginfo:SetDamageForce(diff)
-        dmginfo:SetDamagePosition(ent:GetPos())
+        dmginfo:SetDamagePosition(target_ply:GetPos())
 
-        ent:TakeDamageInfo(dmginfo)
+        target_ply:TakeDamageInfo(dmginfo)
       end
     end
   end
