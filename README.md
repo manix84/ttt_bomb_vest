@@ -8,7 +8,7 @@ There is always a server of friends who have realised that grouping together is 
 This is an alternative to the Jihad Bomb, which is incredibly popular in TTT. I'm really not comfortable with the name, the description, of the sound effect from this add-on, and I struggled to find an alternative for my after work gaming sessions.
 
 ## Features
-- No refereneces to Jihad in any of the files or folder structures (except this one).
+- No references to Jihad in any of the files or folder structures (except this one).
 - Your Traitor body get's burned up.
 - Using the Slam Detonator as the trigger.
 - LEEERRROOOOYYYY JEENNKIIIINNNSSS!!!!!!!
