@@ -7,6 +7,25 @@ There is always a server of friends who have realised that grouping together is 
 
 This is an alternative to the Jihad Bomb, which is incredibly popular in TTT. I'm really not comfortable with the name, the description, of the sound effect from this add-on, and I struggled to find an alternative for my after work gaming sessions.
 
+## Features
+- No refereneces to Jihad in any of the files or folder structures (except this one).
+- Your Traitor body get's burned up.
+- Using the Slam Detonator as the trigger.
+- LEEERRROOOOYYYY JEENNKIIIINNNSSS!!!!!!!
+
+## Future Improvements...
+- I'm going to add variables to this:
+    - Your choice of sound effects (dj_airhorn, kamehameha, leeroy_jenkins, mlg_airhorn, run_vine, shutup, this_is_sparta, wtf_boom).
+    - Make the sparks optional, as I know some people hate them.
+    - Left/Right handed model.
+- Flip the ViewModel, so that it's right handed.
+    - Probably make this optional.
+- Delay the ViewModel trigger press until 0.5s remaining time (for... realism?).
+- Dalay the Sparks until the ViewModel trigger press.
+- Add some variable system for selecting the sound effect. This needs some thought. Maybe add a Random option too.
+- Cut the audio down to 3-4 seconds each. Some are a little long.
+- Better explosion sound effect.
+
 ## Usage
 1. Install the Addon (preferably with the Steam Workshop)
     1. Goto "[TTT] Bomb Vest" on the [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=2166317811)
@@ -23,6 +42,5 @@ This is an alternative to the Jihad Bomb, which is incredibly popular in TTT. I'
 ![Trigger in Hand](https://i.imgur.com/meTL2xy.jpg)
 ### Two victims
 ![Two Victims](https://i.imgur.com/Uej4x11.jpg)
-
 ### See it in action (On YouTube)
 [![See it in action (On YouTube)](http://img.youtube.com/vi/N4mpn7iXM74/0.jpg)](http://www.youtube.com/watch?v=N4mpn7iXM74)
