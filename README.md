@@ -1,4 +1,4 @@
-# ttt_bomb_vest
+# [TTT] Bomb Vest
 ![Icon](https://raw.githubusercontent.com/manix84/ttt_bomb_vest/master/images/icon/ttt_bomb_vest_128x.png)
 
 > Walk into a crowded room. Click... 3, 2, 1, Boom!
@@ -23,3 +23,6 @@ This is an alternative to the Jihad Bomb, which is incredibly popular in TTT. I'
 ![Trigger in Hand](https://i.imgur.com/meTL2xy.jpg)
 ### Two victims
 ![Two Victims](https://i.imgur.com/Uej4x11.jpg)
+
+### See it in action
+[![See it in action](http://img.youtube.com/vi/N4mpn7iXM74/0.jpg)](http://www.youtube.com/watch?v=N4mpn7iXM74)
