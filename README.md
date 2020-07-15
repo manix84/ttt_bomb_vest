@@ -25,6 +25,7 @@ This is an alternative to the Jihad Bomb, which is incredibly popular in TTT. I'
 - Add some variable system for selecting the sound effect. This needs some thought. Maybe add a Random option too.
 - Cut the audio down to 3-4 seconds each. Some are a little long.
 - Better explosion sound effect.
+- Message the bomber with some explosion stats (EG: `You killed 3 people (James, Jill, and Sally), and injured 1 person (Jack)`)
 
 ## Usage
 1. Install the Addon (preferably with the Steam Workshop)
