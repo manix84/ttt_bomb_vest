@@ -11,21 +11,21 @@ This is an alternative to the Jihad Bomb, which is incredibly popular in TTT. I'
 - No references to Jihad in any of the files or folder structures (except this one).
 - Your Traitor body get's burned up.
 - Using the Slam Detonator as the trigger.
-- LEEERRROOOOYYYY JEENNKIIIINNNSSS!!!!!!!
+- LEEEEEEROOOY JEEEENKIIINSSS!!!
 
 ## Future Improvements...
-- I'm going to add variables to this:
-    - Your choice of sound effects (dj_airhorn, kamehameha, leeroy_jenkins, mlg_airhorn, run_vine, shutup, this_is_sparta, wtf_boom).
-    - Make the sparks optional, as I know some people hate them.
-    - Left/Right handed model.
-- Flip the ViewModel, so that it's right handed.
-    - Probably make this optional.
+- Flip the ViewModel, so that it's right handed. (Optional)
+- Make the bomb still explode after death (Optional)
 - Delay the ViewModel trigger press until 0.5s remaining time (for... realism?).
-- Dalay the Sparks until the ViewModel trigger press.
+    - Dalay the Sparks until the ViewModel trigger press.
 - Add some variable system for selecting the sound effect. This needs some thought. Maybe add a Random option too.
 - Cut the audio down to 3-4 seconds each. Some are a little long.
 - Better explosion sound effect.
 - Message the bomber with some explosion stats (EG: `You killed 3 people (James, Jill, and Sally), and injured 1 person (Jack)`)
+- I'm going to add variables to this:
+    - Your choice of sound effects (dj_airhorn, kamehameha, leeroy_jenkins, mlg_airhorn, run_vine, shutup, this_is_sparta, wtf_boom).
+    - Make the sparks optional, as I know some people hate them.
+    - Left/Right handed model.
 
 ## Usage
 1. Install the Addon (preferably with the Steam Workshop)
