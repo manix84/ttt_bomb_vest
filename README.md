@@ -11,13 +11,14 @@ This is an alternative to the Jihad Bomb, which is incredibly popular in TTT. I'
 - No references to Jihad in any of the files or folder structures (except this one).
 - Your Traitor body get's burned up.
 - Using the Slam Detonator as the trigger.
+- Killing the bomber doesn't stop the explosion.
 - LEEEEEEROOOY JEEEENKIIINSSS!!!
 
 ## Future Improvements...
-- Flip the ViewModel, so that it's right handed. (Optional)
-- Make the bomb still explode after death (Optional)
-- Delay the ViewModel trigger press until 0.5s remaining time (for... realism?).
-    - Dalay the Sparks until the ViewModel trigger press.
+- ~~Flip the ViewModel, so that it's right handed.~~ (Optional)
+- ~~Make the bomb still explode after death~~ (Optional)
+- ~~Delay the ViewModel trigger press until 0.5s remaining time (for... realism?).~~
+    - ~~Dalay the Sparks until the ViewModel trigger press.~~
 - Add some variable system for selecting the sound effect. This needs some thought. Maybe add a Random option too.
 - Cut the audio down to 3-4 seconds each. Some are a little long.
 - Better explosion sound effect.
