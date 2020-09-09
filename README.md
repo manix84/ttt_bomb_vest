@@ -38,11 +38,11 @@ This is an alternative to the Jihad Bomb, which is incredibly popular in TTT. I'
 2. It's now available for purchase in the Traitor Store 😊.
 
 ## Screenshots
-### Traitor Store
-![Traitor Store](https://i.imgur.com/rgHvHwI.jpg)
-### Trigger in Hand
-![Trigger in Hand](https://i.imgur.com/meTL2xy.jpg)
-### Two victims
-![Two Victims](https://i.imgur.com/Uej4x11.jpg)
+### Traitor see's a Traitor
+![Traitor see's a Traitor](https://i.imgur.com/e7nFX1o.jpg)
+### Detective see's a Detective
+![Detective see's a Detective](https://i.imgur.com/bMxRu0Y.jpg)
+### Vampire see's a Zombie and another Vampire
+![Vampire see's a Zombie and another Vampire](https://i.imgur.com/rQSc0Tg.jpg)
 ### See it in action (On YouTube)
 [![See it in action (On YouTube)](https://i.imgur.com/0K6A4Ak.png)](http://www.youtube.com/watch?v=N4mpn7iXM74)
