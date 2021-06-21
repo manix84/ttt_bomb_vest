@@ -37,6 +37,15 @@ This is an alternative to the Jihad Bomb, which is incredibly popular in TTT. I'
     2. Place in garrysmod/addons folder (`Steam\steamapps\common\GarrysMod\garrysmod\addons\ttt_bomb_vest`)
 2. It's now available for purchase in the Traitor Store 😊.
 
+## Variables
+
+|Variable|Default|Description|
+|--------|-------|-----------|
+|`ttt_bomb_vest_buyable`|1|Should the Bomb Vest be buyable for Traitors? (1=Yes, 0=No)
+|`ttt_bomb_vest_loadout`|0|Should the Bomb Vest be in the loadout for Traitors? (1=Yes, 0=No)
+|`ttt_bomb_vest_countdown_sound`|"weapons/bomb_vest/countdown.wav"|The sound when triggering the bomb vest.|
+|`ttt_bomb_vest_countdown_length`|2|How long, in seconds, after pulling the trigger before the bomb vest goes bang?|
+
 ## Screenshots
 ### Traitor Store
 ![Traitor Store](https://i.imgur.com/rgHvHwI.jpg)
