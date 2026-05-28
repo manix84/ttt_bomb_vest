@@ -1,0 +1,75 @@
+name: Release
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+      - main
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Package version name"
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    name: Package addon
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Build local install package
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+
+          if [[ -n "${INPUT_VERSION}" ]]; then
+            version="${INPUT_VERSION}"
+          elif [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
+            version="${GITHUB_REF_NAME}"
+          else
+            version="v$(tr -d '[:space:]' < VERSION)"
+          fi
+
+          archive="ttt_bomb_vest-${version}.zip"
+          staging="dist/ttt_bomb_vest"
+
+          rm -rf dist
+          mkdir -p "${staging}"
+
+          cp addon.json "${staging}/"
+          cp -R gamemodes "${staging}/"
+          cp -R materials "${staging}/"
+          cp -R sound "${staging}/"
+
+          (
+            cd dist
+            zip -qr "${archive}" ttt_bomb_vest
+          )
+
+          echo "Built dist/${archive}"
+
+      - name: Upload package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttt_bomb_vest-package
+          path: dist/*.zip
+          if-no-files-found: error
+
+      - name: Publish GitHub Release
+        if: github.ref_type == 'tag'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "${GITHUB_REF_NAME}" dist/*.zip --generate-notes

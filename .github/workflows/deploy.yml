@@ -1,0 +1,127 @@
+name: Deploy to Steam Workshop
+
+on:
+  workflow_dispatch:
+    inputs:
+      change_notes:
+        description: "Steam Workshop change notes"
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Deploy addon
+    runs-on: windows-latest
+
+    env:
+      ADDON_NAME: ttt_bomb_vest
+      WORKSHOP_ITEM_ID: ${{ vars.STEAM_WORKSHOP_ITEM_ID || '2166317811' }}
+      STEAM_USERNAME: ${{ secrets.STEAM_USERNAME }}
+      STEAM_PASSWORD: ${{ secrets.STEAM_PASSWORD }}
+      STEAM_CONFIG_VDF_BASE64: ${{ secrets.STEAM_CONFIG_VDF_BASE64 }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate Steam credentials
+        shell: pwsh
+        run: |
+          if ([string]::IsNullOrWhiteSpace($env:STEAM_USERNAME)) {
+            throw "Missing STEAM_USERNAME secret."
+          }
+
+          if (
+            [string]::IsNullOrWhiteSpace($env:STEAM_PASSWORD) -and
+            [string]::IsNullOrWhiteSpace($env:STEAM_CONFIG_VDF_BASE64)
+          ) {
+            throw "Missing Steam authentication. Set STEAM_CONFIG_VDF_BASE64, or set STEAM_PASSWORD."
+          }
+
+          if ([string]::IsNullOrWhiteSpace($env:WORKSHOP_ITEM_ID)) {
+            throw "Missing Steam Workshop item ID. Set repository variable STEAM_WORKSHOP_ITEM_ID."
+          }
+
+      - name: Install SteamCMD and Garry's Mod tools
+        shell: pwsh
+        run: |
+          $steamCmdDir = Join-Path $env:RUNNER_TEMP "steamcmd"
+          $garrysModDir = Join-Path $env:RUNNER_TEMP "garrysmod"
+          $steamCmdZip = Join-Path $env:RUNNER_TEMP "steamcmd.zip"
+
+          New-Item -ItemType Directory -Force -Path $steamCmdDir, $garrysModDir | Out-Null
+          Invoke-WebRequest "https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip" -OutFile $steamCmdZip
+          Expand-Archive -Path $steamCmdZip -DestinationPath $steamCmdDir -Force
+
+          if (![string]::IsNullOrWhiteSpace($env:STEAM_CONFIG_VDF_BASE64)) {
+            $configDir = Join-Path $steamCmdDir "config"
+            New-Item -ItemType Directory -Force -Path $configDir | Out-Null
+            [IO.File]::WriteAllBytes(
+              (Join-Path $configDir "config.vdf"),
+              [Convert]::FromBase64String($env:STEAM_CONFIG_VDF_BASE64)
+            )
+          }
+
+          $loginArgs = @("+login", $env:STEAM_USERNAME)
+          if (![string]::IsNullOrWhiteSpace($env:STEAM_PASSWORD)) {
+            $loginArgs += $env:STEAM_PASSWORD
+          }
+
+          & "$steamCmdDir\steamcmd.exe" `
+            +force_install_dir "$garrysModDir" `
+            @loginArgs `
+            +app_update 4000 validate `
+            +quit
+
+          "GARRYSMOD_DIR=$garrysModDir" >> $env:GITHUB_ENV
+
+      - name: Stage addon
+        shell: pwsh
+        run: |
+          $stagingDir = Join-Path $env:RUNNER_TEMP $env:ADDON_NAME
+          Remove-Item -Recurse -Force $stagingDir -ErrorAction SilentlyContinue
+          New-Item -ItemType Directory -Force -Path $stagingDir | Out-Null
+
+          Copy-Item addon.json $stagingDir
+          Copy-Item gamemodes $stagingDir -Recurse
+          Copy-Item materials $stagingDir -Recurse
+          Copy-Item sound $stagingDir -Recurse
+
+          "ADDON_STAGING_DIR=$stagingDir" >> $env:GITHUB_ENV
+
+      - name: Build GMA
+        shell: pwsh
+        run: |
+          $gmad = Join-Path $env:GARRYSMOD_DIR "bin\gmad.exe"
+          $gma = Join-Path $env:RUNNER_TEMP "$env:ADDON_NAME.gma"
+
+          if (!(Test-Path $gmad)) {
+            throw "gmad.exe was not found at $gmad"
+          }
+
+          & $gmad create -folder "$env:ADDON_STAGING_DIR" -out "$gma"
+          "ADDON_GMA=$gma" >> $env:GITHUB_ENV
+
+      - name: Upload to Steam Workshop
+        shell: pwsh
+        env:
+          CHANGE_NOTES: ${{ inputs.change_notes }}
+        run: |
+          $gmpublish = Join-Path $env:GARRYSMOD_DIR "bin\gmpublish.exe"
+
+          if (!(Test-Path $gmpublish)) {
+            throw "gmpublish.exe was not found at $gmpublish"
+          }
+
+          $changes = $env:CHANGE_NOTES
+          if ([string]::IsNullOrWhiteSpace($changes)) {
+            $changes = "GitHub Actions deploy $env:GITHUB_SHA"
+          }
+
+          & $gmpublish update `
+            -addon "$env:ADDON_GMA" `
+            -id "$env:WORKSHOP_ITEM_ID" `
+            -changes "$changes"
