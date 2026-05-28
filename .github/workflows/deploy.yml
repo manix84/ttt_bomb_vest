@@ -21,6 +21,7 @@ jobs:
       WORKSHOP_ITEM_ID: ${{ vars.STEAM_WORKSHOP_ITEM_ID || '2166317811' }}
       STEAM_USERNAME: ${{ vars.STEAM_USERNAME || secrets.STEAM_USERNAME }}
       STEAM_CONFIG_VDF_BASE64: ${{ secrets.STEAM_CONFIG_VDF_BASE64 }}
+      STEAM_LOGINUSERS_VDF_BASE64: ${{ secrets.STEAM_LOGINUSERS_VDF_BASE64 }}
 
     steps:
       - name: Check out repository
@@ -35,6 +36,10 @@ jobs:
 
           if ([string]::IsNullOrWhiteSpace($env:STEAM_CONFIG_VDF_BASE64)) {
             throw "Missing STEAM_CONFIG_VDF_BASE64 secret. Password login can time out on Steam Guard mobile approval in GitHub Actions."
+          }
+
+          if ([string]::IsNullOrWhiteSpace($env:STEAM_LOGINUSERS_VDF_BASE64)) {
+            throw "Missing STEAM_LOGINUSERS_VDF_BASE64 secret. SteamCMD needs loginusers.vdf as well as config.vdf to reuse cached credentials."
           }
 
           if ([string]::IsNullOrWhiteSpace($env:WORKSHOP_ITEM_ID)) {
@@ -58,6 +63,10 @@ jobs:
             [IO.File]::WriteAllBytes(
               (Join-Path $configDir "config.vdf"),
               [Convert]::FromBase64String($env:STEAM_CONFIG_VDF_BASE64)
+            )
+            [IO.File]::WriteAllBytes(
+              (Join-Path $configDir "loginusers.vdf"),
+              [Convert]::FromBase64String($env:STEAM_LOGINUSERS_VDF_BASE64)
             )
           }
 

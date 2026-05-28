@@ -118,16 +118,23 @@ You can also provide `STEAM_USERNAME` as a repository secret if you prefer.
 
 Authentication repository secrets:
 - `STEAM_CONFIG_VDF_BASE64` - required. Base64-encoded SteamCMD `config/config.vdf` from a machine that has already completed Steam Guard.
+- `STEAM_LOGINUSERS_VDF_BASE64` - required. Base64-encoded SteamCMD `config/loginusers.vdf` from the same machine.
 
-To create `STEAM_CONFIG_VDF_BASE64`, log in once with SteamCMD on your own machine, approve the Steam Guard prompt, then base64 encode that SteamCMD install's `config/config.vdf`.
+To create the Steam auth secrets, log in once with SteamCMD on your own machine, approve the Steam Guard prompt, then base64 encode that SteamCMD install's auth files.
 
-On macOS:
+On macOS, copy `STEAM_CONFIG_VDF_BASE64`:
 
 ```sh
 base64 -i /path/to/steamcmd/config/config.vdf | tr -d '\n' | pbcopy
 ```
 
-Paste the copied value into the `STEAM_CONFIG_VDF_BASE64` repository secret.
+Then copy `STEAM_LOGINUSERS_VDF_BASE64`:
+
+```sh
+base64 -i /path/to/steamcmd/config/loginusers.vdf | tr -d '\n' | pbcopy
+```
+
+Paste each copied value into the matching repository secret.
 
 A Steam Web API key or game server login token is not enough for this Garry's Mod Workshop upload path. The workflow uses `gmpublish`, which authenticates through SteamCMD/Steam.
 
