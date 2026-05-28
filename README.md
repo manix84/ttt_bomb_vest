@@ -1,4 +1,4 @@
-# [TTT] Bomb Vest
+# 🧨 [TTT] Bomb Vest
 ![Icon](https://raw.githubusercontent.com/manix84/ttt_bomb_vest/master/images/icon/ttt_bomb_vest_128x.png)
 
 > Walk into a crowded room. Click... 3, 2, 1, Boom!
@@ -7,7 +7,7 @@ There is always a server of friends who have realised that grouping together is 
 
 This is an alternative to the Jihad Bomb, which is incredibly popular in TTT. I'm really not comfortable with the name, the description, of the sound effect from this add-on, and I struggled to find an alternative for my after work gaming sessions.
 
-## Features
+## ✨ Features
 - No references to Jihad in any of the files or folder structures (except this one).
 - Your Traitor body get's burned up.
 - Using the Slam Detonator as the trigger.
@@ -19,7 +19,7 @@ This is an alternative to the Jihad Bomb, which is incredibly popular in TTT. I'
 - Explosion stats are sent to the bomber after detonation.
 - LEEEEEEROOOY JEEEENKIIINSSS!!!
 
-## Usage
+## 📦 Usage
 1. Install the Addon (preferably with the Steam Workshop)
     1. Goto "[TTT] Bomb Vest" on the [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=2166317811)
     2. Click "Subscribe"
@@ -29,7 +29,7 @@ This is an alternative to the Jihad Bomb, which is incredibly popular in TTT. I'
     3. Place the extracted `ttt_bomb_vest` folder in `garrysmod/addons` (`Steam\steamapps\common\GarrysMod\garrysmod\addons\ttt_bomb_vest`).
 2. It's now available for purchase in the Traitor Store 😊.
 
-## Versioning
+## 🔖 Versioning
 The package version is tracked in `VERSION`. Version bumps are handled with:
 
 ```sh
@@ -50,7 +50,7 @@ The pre-commit hook defaults to a patch bump and skips bumping if `VERSION` is a
 
 GitHub Actions builds the installable package for pull requests and pushes. Pushing a `v*` tag publishes a GitHub Release with the package attached.
 
-## Linting
+## 🧹 Linting
 `glualint` is installed project-locally so it does not need to be available globally in `PATH`.
 
 ```sh
@@ -66,7 +66,7 @@ The wrapper downloads `FPtje/GLuaFixer` into `.tools/` on first run and then lin
 
 Point editor integrations at `scripts/glualint.sh` if they allow a custom executable path.
 
-## Steam Workshop deployment
+## 🚀 Steam Workshop deployment
 The `Deploy to Steam Workshop` GitHub Actions workflow manually deploys the addon to Steam Workshop using Garry's Mod's `gmad` and `gmpublish` tools.
 
 Required repository secret:
@@ -83,7 +83,7 @@ Optional repository variable:
 
 Run the workflow from GitHub Actions and provide change notes when prompted.
 
-## Admin panel
+## ⚙️ Admin panel
 Open `Utilities > TTT > Bomb Vest` in the GMod spawn menu.
 
 All players can change:
@@ -99,7 +99,7 @@ Admins can also change server settings:
 
 Legacy sound cvars are not shown in the panel. If `ttt_bomb_vest_countdown_sound` or `ttt_bomb_vest_sound_effect` still contain old values, the addon migrates them into the new pre-explosion settings and clears the legacy cvars.
 
-## Variables
+## 🧰 Variables
 
 |Variable|Default|Description|
 |--------|-------|-----------|
@@ -111,12 +111,12 @@ Legacy sound cvars are not shown in the panel. If `ttt_bomb_vest_countdown_sound
 |`ttt_bomb_vest_sparks`|1|Should sparks show when the detonator trigger is pressed? (1=Yes, 0=No)|
 |`ttt_bomb_vest_left_handed`|0|Client-side preference. Should your view model be left handed? (1=Yes, 0=No)|
 
-## Screenshots
-### Traitor Store
+## 📸 Screenshots
+### 🛒 Traitor Store
 ![Traitor Store](https://i.imgur.com/rgHvHwI.jpg)
-### Trigger in Hand
+### 🕹️ Trigger in Hand
 ![Trigger in Hand](https://i.imgur.com/meTL2xy.jpg)
-### Two victims
+### 💥 Two victims
 ![Two Victims](https://i.imgur.com/Uej4x11.jpg)
-### See it in action (On YouTube)
+### ▶️ See it in action (On YouTube)
 [![See it in action (On YouTube)](https://i.imgur.com/0K6A4Ak.png)](https://youtu.be/N4mpn7iXM74)
