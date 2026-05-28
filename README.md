@@ -15,6 +15,7 @@ This is an alternative to the Jihad Bomb, which is incredibly popular in TTT. I'
 - Delayed trigger press and optional sparks before detonation.
 - Configurable pre-explosion sound effects, including a random option.
 - Configurable left or right handed view model.
+- GMod admin panel for server settings.
 - Explosion stats are sent to the bomber after detonation.
 - LEEEEEEROOOY JEEEENKIIINSSS!!!
 
@@ -66,6 +67,22 @@ Optional repository variable:
 
 Run the workflow from GitHub Actions and provide change notes when prompted.
 
+## Admin panel
+Open `Utilities > TTT > Bomb Vest` in the GMod spawn menu.
+
+All players can change:
+- `Right handed view model` - local client preference only.
+
+Admins can also change server settings:
+- `Buyable for Traitors`
+- `Traitor loadout`
+- `Pre-explosion delay`
+- `Sparks before detonation`
+- `Pre-explosion sound effect`
+- `Pre-explosion sound override`
+
+Legacy sound cvars are not shown in the panel. If `ttt_bomb_vest_countdown_sound` or `ttt_bomb_vest_sound_effect` still contain old values, the addon migrates them into the new pre-explosion settings and clears the legacy cvars.
+
 ## Variables
 
 |Variable|Default|Description|
@@ -74,11 +91,9 @@ Run the workflow from GitHub Actions and provide change notes when prompted.
 |`ttt_bomb_vest_loadout`|0|Should the Bomb Vest be in the loadout for Traitors? (1=Yes, 0=No)
 |`ttt_bomb_vest_pre_explosion_sound_effect`|"leeroy_jenkins"|The sound effect played before the vest explodes. Options: `random`, `dj_airhorn`, `kamehameha`, `leeroy_jenkins`, `mlg_airhorn`, `run_vine`, `shutup`, `this_is_sparta`, `wtf_boom`.|
 |`ttt_bomb_vest_pre_explosion_sound`|""|Sound path override for the pre-explosion sound. Leave blank to use `ttt_bomb_vest_pre_explosion_sound_effect`.|
-|`ttt_bomb_vest_sound_effect`|""|Legacy pre-explosion sound effect. Leave blank to use `ttt_bomb_vest_pre_explosion_sound_effect`.|
-|`ttt_bomb_vest_countdown_sound`|""|Legacy pre-explosion sound path override. Leave blank to use `ttt_bomb_vest_pre_explosion_sound_effect`.|
 |`ttt_bomb_vest_countdown_length`|2|How long, in seconds, after pulling the trigger before the bomb vest goes bang?|
 |`ttt_bomb_vest_sparks`|1|Should sparks show when the detonator trigger is pressed? (1=Yes, 0=No)|
-|`ttt_bomb_vest_right_handed`|1|Should the view model be right handed? (1=Yes, 0=No)|
+|`ttt_bomb_vest_right_handed`|1|Client-side preference. Should your view model be right handed? (1=Yes, 0=No)|
 
 ## Screenshots
 ### Traitor Store
