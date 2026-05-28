@@ -21,7 +21,8 @@ addon.ServerConVars = addon.ServerConVars or {
 }
 
 addon.ClientConVars = addon.ClientConVars or {
-  right_handed = { name = "ttt_bomb_vest_right_handed", default = "1", kind = "bool", help = "Should your Bomb Vest view model be right handed?" }
+  left_handed = { name = "ttt_bomb_vest_left_handed", default = "0", kind = "bool", help = "Should your Bomb Vest view model be left handed?" },
+  right_handed = { name = "ttt_bomb_vest_right_handed", default = "1", kind = "bool", legacy = true, help = "Legacy right handed view model preference." }
 }
 
 local SOUND_EFFECT_CHOICES = {
@@ -96,12 +97,24 @@ local function getServerNumber(key)
 end
 
 local function getRightHanded()
-  local data = addon.ClientConVars.right_handed
+  local data = addon.ClientConVars.left_handed
   local convar = GetConVar(data.name)
 
-  if convar then return convar:GetBool() end
+  if convar then return not convar:GetBool() end
 
-  return data.default == "1"
+  return data.default ~= "1"
+end
+
+if CLIENT then
+  timer.Simple(0, function()
+    local leftHanded = GetConVar(addon.ClientConVars.left_handed.name)
+    local legacyRightHanded = GetConVar(addon.ClientConVars.right_handed.name)
+
+    if leftHanded and legacyRightHanded and not leftHanded:GetBool() and not legacyRightHanded:GetBool() then
+      RunConsoleCommand(addon.ClientConVars.left_handed.name, "1")
+      RunConsoleCommand(addon.ClientConVars.right_handed.name, "1")
+    end
+  end)
 end
 
 local normaliseServerValue
@@ -476,7 +489,7 @@ if CLIENT then
     panel:ClearControls()
     panel:Help("Bomb Vest")
 
-    addClientCheck(panel, addon.ClientConVars.right_handed, "Right handed view model", "Changes only your own Bomb Vest view model.")
+    addClientCheck(panel, addon.ClientConVars.left_handed, "Left handed view model", "Changes only your own Bomb Vest view model.")
 
     if not isAdmin(LocalPlayer()) then
       panel:Help("Server settings are available to admins.")

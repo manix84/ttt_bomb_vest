@@ -14,7 +14,7 @@ This is an alternative to the Jihad Bomb, which is incredibly popular in TTT. I'
 - Killing the bomber doesn't stop the explosion.
 - Delayed trigger press and optional sparks before detonation.
 - Configurable pre-explosion sound effects, including a random option.
-- Configurable left or right handed view model.
+- Right handed view model by default, with an optional left handed client preference.
 - GMod admin panel for server settings.
 - Explosion stats are sent to the bomber after detonation.
 - LEEEEEEROOOY JEEEENKIIINSSS!!!
@@ -87,7 +87,7 @@ Run the workflow from GitHub Actions and provide change notes when prompted.
 Open `Utilities > TTT > Bomb Vest` in the GMod spawn menu.
 
 All players can change:
-- `Right handed view model` - local client preference only.
+- `Left handed view model` - local client preference only.
 
 Admins can also change server settings:
 - `Buyable for Traitors`
@@ -109,7 +109,7 @@ Legacy sound cvars are not shown in the panel. If `ttt_bomb_vest_countdown_sound
 |`ttt_bomb_vest_pre_explosion_sound`|""|Sound path override for the pre-explosion sound. Leave blank to use `ttt_bomb_vest_pre_explosion_sound_effect`.|
 |`ttt_bomb_vest_countdown_length`|2|How long, in seconds, after pulling the trigger before the bomb vest goes bang?|
 |`ttt_bomb_vest_sparks`|1|Should sparks show when the detonator trigger is pressed? (1=Yes, 0=No)|
-|`ttt_bomb_vest_right_handed`|1|Client-side preference. Should your view model be right handed? (1=Yes, 0=No)|
+|`ttt_bomb_vest_left_handed`|0|Client-side preference. Should your view model be left handed? (1=Yes, 0=No)|
 
 ## Screenshots
 ### Traitor Store
