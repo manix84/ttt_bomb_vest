@@ -1,5 +1,5 @@
 # 🧨 [TTT] Bomb Vest
-![Icon](https://raw.githubusercontent.com/manix84/ttt_bomb_vest/master/images/icon/ttt_bomb_vest_128x.png)
+![Icon](https://raw.githubusercontent.com/manix84/ttt-bomb-vest/master/images/icon/ttt_bomb_vest_128x.png)
 
 > Walk into a crowded room. Click... 3, 2, 1, Boom!
 
@@ -27,7 +27,7 @@ Install with one of these methods:
 |Method|Steps|
 |------|-----|
 |Steam Workshop|Open [[TTT] Bomb Vest](https://steamcommunity.com/sharedfiles/filedetails/?id=2166317811) and click `Subscribe`.|
-|Manual install|Download the latest `ttt_bomb_vest-<version>.zip` from [GitHub Releases](https://github.com/manix84/ttt_bomb_vest/releases), extract it, and place the extracted `ttt_bomb_vest` folder in `garrysmod/addons`.|
+|Manual install|Download the latest `ttt_bomb_vest-<version>.zip` from [GitHub Releases](https://github.com/manix84/ttt-bomb-vest/releases), extract it, and place the extracted `ttt_bomb_vest` folder in `garrysmod/addons`.|
 
 After installation, the Bomb Vest is available for purchase in the Traitor Store 😊.
 
