@@ -1,5 +1,7 @@
 # 🧨 What's New
 
+Recent changes for `[TTT] Bomb Vest`.
+
 ## 🚀 0.1.4
 
 - Added configurable pre-explosion sound effects, including a random option.
@@ -13,7 +15,7 @@
 
 ## 🗃️ Legacy
 
-- Bomb Vest can be bought by Traitors.
+- The Bomb Vest can be bought by Traitors.
 - The bomber's body burns after detonation.
 - Killing the bomber does not stop an armed vest from exploding.
 - Uses the Slam Detonator view model.

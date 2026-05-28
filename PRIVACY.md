@@ -1,5 +1,7 @@
 # 🔒 Privacy
 
+Privacy details for `[TTT] Bomb Vest`.
+
 ## 🧨 Bomb Vest Addon
 
 `[TTT] Bomb Vest` does not collect, store, transmit, or sell personal data.
