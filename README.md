@@ -50,6 +50,22 @@ The pre-commit hook defaults to a patch bump and skips bumping if `VERSION` is a
 
 GitHub Actions builds the installable package for pull requests and pushes. Pushing a `v*` tag publishes a GitHub Release with the package attached.
 
+## Linting
+`glualint` is installed project-locally so it does not need to be available globally in `PATH`.
+
+```sh
+./scripts/glualint.sh
+```
+
+The wrapper downloads `FPtje/GLuaFixer` into `.tools/` on first run and then lints `shared.lua`. You can pass normal `glualint` commands through the wrapper:
+
+```sh
+./scripts/glualint.sh version
+./scripts/glualint.sh lint gamemodes/terrortown/entities/weapons/ttt_bomb_vest/shared.lua
+```
+
+Point editor integrations at `scripts/glualint.sh` if they allow a custom executable path.
+
 ## Steam Workshop deployment
 The `Deploy to Steam Workshop` GitHub Actions workflow manually deploys the addon to Steam Workshop using Garry's Mod's `gmad` and `gmpublish` tools.
 

@@ -569,7 +569,7 @@ function SWEP:PrimaryAttack()
 
     timer.Simple(triggerDelay, function()
       if IsValid(self) then
-        self.Weapon:SendWeaponAnim(ACT_SLAM_DETONATOR_DETONATE)
+        self:SendWeaponAnim(ACT_SLAM_DETONATOR_DETONATE)
 
         if getServerBool("sparks") then
           util.Effect("Sparks", effectdata)
@@ -806,12 +806,12 @@ function SWEP:BurnCorps(model, dmg_owner)
 end
 
 function SWEP:Deploy()
-  self.Weapon:SendWeaponAnim(ACT_SLAM_DETONATOR_DRAW)
+  self:SendWeaponAnim(ACT_SLAM_DETONATOR_DRAW)
   self:SetNWBool("Exploding", false)
   self.ViewModelFlip = getRightHanded()
 end
 
 function SWEP:Holster()
-  self.Weapon:SendWeaponAnim(ACT_SLAM_DETONATOR_HOLSTER)
+  self:SendWeaponAnim(ACT_SLAM_DETONATOR_HOLSTER)
   return not self:GetNWBool("Exploding")
 end
