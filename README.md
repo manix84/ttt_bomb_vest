@@ -111,12 +111,23 @@ GitHub Actions builds the installable package for pull requests and pushes. Push
 ## 🚀 Steam Workshop deployment
 The `Deploy to Steam Workshop` GitHub Actions workflow manually deploys the addon to Steam Workshop using Garry's Mod's `gmad` and `gmpublish` tools.
 
-Required repository secret:
+Required repository variable:
 - `STEAM_USERNAME`
 
+You can also provide `STEAM_USERNAME` as a repository secret if you prefer.
+
 Authentication repository secrets:
-- `STEAM_CONFIG_VDF_BASE64` - recommended. Base64-encoded SteamCMD `config/config.vdf` from a machine that has already completed Steam Guard.
-- `STEAM_PASSWORD` - fallback when no SteamCMD config token is available.
+- `STEAM_CONFIG_VDF_BASE64` - required. Base64-encoded SteamCMD `config/config.vdf` from a machine that has already completed Steam Guard.
+
+To create `STEAM_CONFIG_VDF_BASE64`, log in once with SteamCMD on your own machine, approve the Steam Guard prompt, then base64 encode that SteamCMD install's `config/config.vdf`.
+
+On macOS:
+
+```sh
+base64 -i /path/to/steamcmd/config/config.vdf | tr -d '\n' | pbcopy
+```
+
+Paste the copied value into the `STEAM_CONFIG_VDF_BASE64` repository secret.
 
 A Steam Web API key or game server login token is not enough for this Garry's Mod Workshop upload path. The workflow uses `gmpublish`, which authenticates through SteamCMD/Steam.
 
