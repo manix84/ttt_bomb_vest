@@ -139,6 +139,7 @@ jobs:
             throw "SteamCMD logged in with cached credentials but failed to install Garry's Mod tools with app_update 4000. Confirm the Steam account owns Garry's Mod and can install app 4000 through SteamCMD."
           }
 
+          "STEAMCMD_DIR=$steamCmdDir" >> $env:GITHUB_ENV
           "GARRYSMOD_DIR=$garrysModDir" >> $env:GITHUB_ENV
 
       - name: Stage addon
@@ -173,26 +174,45 @@ jobs:
         env:
           CHANGE_NOTES: ${{ inputs.change_notes }}
         run: |
-          $gmpublish = Join-Path $env:GARRYSMOD_DIR "bin\gmpublish.exe"
-
-          if (!(Test-Path $gmpublish)) {
-            throw "gmpublish.exe was not found at $gmpublish"
-          }
+          $steamcmd = Join-Path $env:STEAMCMD_DIR "steamcmd.exe"
 
           $changes = $env:CHANGE_NOTES
           if ([string]::IsNullOrWhiteSpace($changes)) {
             $changes = Get-Content "dist\steam-change-notes.txt" -Raw
           }
 
-          $gmpublishOutput = & $gmpublish update `
-            -addon "$env:ADDON_GMA" `
-            -id "$env:WORKSHOP_ITEM_ID" `
-            -changes "$changes" 2>&1
-          $gmpublishExitCode = $LASTEXITCODE
+          $workshopContentDir = Join-Path $env:RUNNER_TEMP "workshop-content"
+          $workshopVdf = Join-Path $env:RUNNER_TEMP "workshop-upload.vdf"
+          New-Item -ItemType Directory -Force -Path $workshopContentDir | Out-Null
+          Copy-Item "$env:ADDON_GMA" (Join-Path $workshopContentDir "$env:ADDON_NAME.gma") -Force
 
-          $gmpublishOutput | ForEach-Object { Write-Host $_ }
-          $gmpublishText = $gmpublishOutput -join "`n"
+          function ConvertTo-VdfValue([string] $value) {
+            return $value.Replace("\", "\\").Replace('"', '\"').Replace("`r`n", "\n").Replace("`n", "\n")
+          }
 
-          if ($gmpublishExitCode -ne 0 -or $gmpublishText -match "(?m)^Error:" -or $gmpublishText -match "Couldn't initialize Steam") {
-            throw "gmpublish failed. The Garry's Mod publisher requires Steam to initialize; SteamCMD login alone is not enough for this tool on a headless GitHub runner."
+          $contentFolder = ConvertTo-VdfValue $workshopContentDir
+          $changeNote = ConvertTo-VdfValue $changes
+
+          @(
+            '"workshopitem"',
+            '{',
+            '  "appid" "4000"',
+            "  `"publishedfileid`" `"$env:WORKSHOP_ITEM_ID`"",
+            "  `"contentfolder`" `"$contentFolder`"",
+            "  `"changenote`" `"$changeNote`"",
+            '}'
+          ) | Set-Content -Path $workshopVdf -Encoding ASCII
+
+          $loginArgs = @("+login", $env:STEAM_USERNAME)
+          $uploadOutput = & $steamcmd `
+            @loginArgs `
+            +workshop_build_item "$workshopVdf" `
+            +quit 2>&1
+          $uploadExitCode = $LASTEXITCODE
+
+          $uploadOutput | ForEach-Object { Write-Host $_ }
+          $uploadText = $uploadOutput -join "`n"
+
+          if ($uploadExitCode -ne 0 -or $uploadText -match "(?m)(ERROR|Error|FAILED|Failed)") {
+            throw "SteamCMD workshop_build_item failed."
           }

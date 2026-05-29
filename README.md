@@ -113,7 +113,7 @@ GitHub Actions builds the installable package for pull requests. Merges into `ma
 ## 🚀 Steam Workshop deployment
 Merges into `main` publish a GitHub Release and deploy to Steam Workshop. Both workflows generate matching release notes from the current `VERSION` and recent git history: Markdown for GitHub Releases, and Steam Workshop BBCode for Workshop change notes.
 
-The `Deploy to Steam Workshop` GitHub Actions workflow can also be run manually, using Garry's Mod's `gmad` and `gmpublish` tools.
+The `Deploy to Steam Workshop` GitHub Actions workflow can also be run manually. It builds the addon with Garry's Mod's `gmad` tool, then uploads through SteamCMD's headless `workshop_build_item` command so a desktop Steam client is not required on the runner.
 
 Required repository variable:
 - `STEAM_USERNAME`
