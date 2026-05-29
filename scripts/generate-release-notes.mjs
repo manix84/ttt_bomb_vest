@@ -8,6 +8,7 @@ const rootDir = dirname(dirname(fileURLToPath(import.meta.url)));
 const outDir = join(rootDir, 'dist');
 const version = (process.env.RELEASE_VERSION || readFileSync(join(rootDir, 'VERSION'), 'utf8')).trim().replace(/^v/, '');
 const tagName = `v${version}`;
+const releaseUrl = `https://github.com/manix84/ttt-bomb-vest/releases/tag/${tagName}`;
 
 const runGit = (args) => {
   try {
@@ -124,6 +125,8 @@ for (const category of orderedCategories) {
   markdownLines.push('');
   steamLines.push('[/list]', '');
 }
+
+steamLines.push(`Tagged release: [url=${releaseUrl}]${tagName}[/url]`);
 
 mkdirSync(outDir, { recursive: true });
 writeFileSync(join(outDir, 'release-notes.md'), `${markdownLines.join('\n').trim()}\n`);
