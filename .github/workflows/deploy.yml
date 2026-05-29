@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "addon.json"
+      - "gamemodes/**"
+      - "materials/**"
+      - "sound/**"
   workflow_dispatch:
     inputs:
       change_notes:

@@ -108,10 +108,18 @@ Point editor integrations at `scripts/glualint.sh` if they allow a custom execut
 
 ### 📦 Release packaging
 
-GitHub Actions builds the installable package for pull requests. Merges into `main` publish a GitHub Release with the package attached.
+GitHub Actions builds the installable package for pull requests. Merges into `main` publish a GitHub Release with the package attached when addon payload files change.
 
 ## 🚀 Steam Workshop deployment
-Merges into `main` publish a GitHub Release and deploy to Steam Workshop. Both workflows generate matching release notes from the current `VERSION` and recent git history: Markdown for GitHub Releases, and Steam Workshop BBCode for Workshop change notes.
+Merges into `main` publish a GitHub Release and deploy to Steam Workshop when addon payload files change. Both workflows generate matching release notes from the current `VERSION` and recent git history: Markdown for GitHub Releases, and Steam Workshop BBCode for Workshop change notes.
+
+Automatic release and deployment runs are limited to packaged addon files:
+- `addon.json`
+- `gamemodes/**`
+- `materials/**`
+- `sound/**`
+
+Documentation, version-only, script, and workflow changes do not trigger automatic GitHub Releases or Steam Workshop deployments. Manual workflow runs are still available from GitHub Actions.
 
 The `Deploy to Steam Workshop` GitHub Actions workflow can also be run manually. It builds the addon with Garry's Mod's `gmad` tool, then uploads through SteamCMD's headless `workshop_build_item` command so a desktop Steam client is not required on the runner.
 

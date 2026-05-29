@@ -8,6 +8,7 @@ Recent changes for `[TTT] Bomb Vest`.
 - Added automatic Steam Workshop deployment from GitHub Actions using SteamCMD's headless `workshop_build_item` upload path.
 - Added shared release-note generation so GitHub Releases use Markdown and Steam Workshop change notes use Steam BBCode.
 - Added a tagged GitHub release link to the bottom of Steam Workshop change notes.
+- Limited automatic releases and deployments to packaged addon file changes, so docs, workflow, script, and version-only updates do not deploy.
 - Improved SteamCMD deployment validation, cached credential setup documentation, and upload failure detection.
 
 ## 🚀 0.1.4
