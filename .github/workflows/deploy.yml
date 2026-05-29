@@ -66,6 +66,15 @@ jobs:
           Invoke-WebRequest "https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip" -OutFile $steamCmdZip
           Expand-Archive -Path $steamCmdZip -DestinationPath $steamCmdDir -Force
 
+          & "$steamCmdDir\steamcmd.exe" +quit
+          if ($LASTEXITCODE -ne 0) {
+            Write-Warning "SteamCMD returned $LASTEXITCODE while bootstrapping. Retrying once after self-update."
+            & "$steamCmdDir\steamcmd.exe" +quit
+            if ($LASTEXITCODE -ne 0) {
+              throw "SteamCMD failed to bootstrap before login."
+            }
+          }
+
           $configDir = Join-Path $steamCmdDir "config"
           $configPath = Join-Path $configDir "config.vdf"
           $loginUsersPath = Join-Path $configDir "loginusers.vdf"
