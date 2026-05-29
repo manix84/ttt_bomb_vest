@@ -159,7 +159,7 @@ Paste each copied value into the matching repository secret.
 A Steam Web API key or game server login token is not enough for this Garry's Mod Workshop upload path. The workflow uses SteamCMD cached login credentials for both Garry's Mod tool installation and Workshop upload.
 
 Optional repository variable:
-- `STEAM_WORKSHOP_ITEM_ID` - defaults to `2166317811`.
+- `STEAM_WORKSHOP_ITEM_ID` - existing Steam Workshop item ID. Leave unset for the first deployment so SteamCMD creates a new Workshop item, then set this variable to the ID printed by the workflow.
 
 Run the workflow from GitHub Actions to deploy manually. If no change notes are provided, the workflow uses the generated Steam Workshop BBCode notes.
 

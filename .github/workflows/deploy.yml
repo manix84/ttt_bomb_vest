@@ -26,7 +26,7 @@ jobs:
 
     env:
       ADDON_NAME: ttt_bomb_vest
-      WORKSHOP_ITEM_ID: ${{ vars.STEAM_WORKSHOP_ITEM_ID || '2166317811' }}
+      WORKSHOP_ITEM_ID: ${{ vars.STEAM_WORKSHOP_ITEM_ID }}
       STEAM_USERNAME: ${{ vars.STEAM_USERNAME || secrets.STEAM_USERNAME }}
       STEAM_CONFIG_VDF_BASE64: ${{ secrets.STEAM_CONFIG_VDF_BASE64 }}
       STEAM_LOGINUSERS_VDF_BASE64: ${{ secrets.STEAM_LOGINUSERS_VDF_BASE64 }}
@@ -54,10 +54,6 @@ jobs:
 
           if ([string]::IsNullOrWhiteSpace($env:STEAM_LOGINUSERS_VDF_BASE64)) {
             throw "Missing STEAM_LOGINUSERS_VDF_BASE64 secret. SteamCMD needs loginusers.vdf as well as config.vdf to reuse cached credentials."
-          }
-
-          if ([string]::IsNullOrWhiteSpace($env:WORKSHOP_ITEM_ID)) {
-            throw "Missing Steam Workshop item ID. Set repository variable STEAM_WORKSHOP_ITEM_ID."
           }
 
       - name: Install SteamCMD and Garry's Mod tools
@@ -197,12 +193,18 @@ jobs:
 
           $contentFolder = ConvertTo-VdfValue $workshopContentDir
           $changeNote = ConvertTo-VdfValue (($changes -replace "`r`n", "`n").TrimEnd("`n"))
+          $publishedFileId = $env:WORKSHOP_ITEM_ID
+
+          if ([string]::IsNullOrWhiteSpace($publishedFileId)) {
+            $publishedFileId = "0"
+            Write-Host "STEAM_WORKSHOP_ITEM_ID is not set. SteamCMD will create a new Workshop item."
+          }
 
           @(
             '"workshopitem"',
             '{',
             '  "appid" "4000"',
-            "  `"publishedfileid`" `"$env:WORKSHOP_ITEM_ID`"",
+            "  `"publishedfileid`" `"$publishedFileId`"",
             "  `"contentfolder`" `"$contentFolder`"",
             "  `"changenote`" `"$changeNote`"",
             '}'
@@ -220,4 +222,18 @@ jobs:
 
           if ($uploadExitCode -ne 0 -or $uploadText -match "(?m)(ERROR|Error|FAILED|Failed)") {
             throw "SteamCMD workshop_build_item failed."
+          }
+
+          $updatedWorkshopVdf = Get-Content $workshopVdf -Raw
+          $createdItemMatch = [regex]::Match($updatedWorkshopVdf, '"publishedfileid"\s+"(?<id>\d+)"')
+
+          if ($createdItemMatch.Success) {
+            $createdItemId = $createdItemMatch.Groups["id"].Value
+            Write-Host "Steam Workshop item ID: $createdItemId"
+
+            if ([string]::IsNullOrWhiteSpace($env:WORKSHOP_ITEM_ID) -and $createdItemId -ne "0") {
+              Write-Host "::notice title=Steam Workshop Item Created::Set repository variable STEAM_WORKSHOP_ITEM_ID to $createdItemId for future deployments."
+            }
+          } else {
+            Write-Warning "Could not read publishedfileid from SteamCMD workshop VDF after upload."
           }
