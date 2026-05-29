@@ -148,12 +148,12 @@ base64 -e "$HOME/Library/Application Support/Steam/config/loginusers.vdf" | tr -
 
 Paste each copied value into the matching repository secret.
 
-A Steam Web API key or game server login token is not enough for this Garry's Mod Workshop upload path. The workflow uses `gmpublish`, which authenticates through SteamCMD/Steam.
+A Steam Web API key or game server login token is not enough for this Garry's Mod Workshop upload path. The workflow uses SteamCMD cached login credentials for both Garry's Mod tool installation and Workshop upload.
 
 Optional repository variable:
 - `STEAM_WORKSHOP_ITEM_ID` - defaults to `2166317811`.
 
-Run the workflow from GitHub Actions and provide change notes when prompted.
+Run the workflow from GitHub Actions to deploy manually. If no change notes are provided, the workflow uses the generated Steam Workshop BBCode notes.
 
 ## 📸 Screenshots
 ### 🛒 Traitor Store
