@@ -9,7 +9,7 @@ There is always a server of friends who have realised that grouping together is 
 
 This is an alternative to the Jihad Bomb, which is incredibly popular in TTT. I wanted a version that fits better in mixed company, keeps the joke configurable, and gives servers more control over sounds, effects, and player preferences.
 
-See [What's New](WHATSNEW.md) for recent changes and [Privacy](PRIVACY.md) for privacy details.
+See [What's New](WHATSNEW.md) for recent changes, [Privacy](PRIVACY.md) for privacy details, [Support](SUPPORT.md) for help, and [Contributing](CONTRIBUTING.md) for development guidance.
 
 ## ✨ Features
 - No references to Jihad in any of the files or folder structures (except this one).
