@@ -1,6 +1,9 @@
 name: Deploy to Steam Workshop
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
     inputs:
       change_notes:
@@ -26,6 +29,12 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Generate Steam change notes
+        shell: pwsh
+        run: node scripts/generate-release-notes.mjs
 
       - name: Validate Steam credentials
         shell: pwsh
@@ -138,7 +147,7 @@ jobs:
 
           $changes = $env:CHANGE_NOTES
           if ([string]::IsNullOrWhiteSpace($changes)) {
-            $changes = "GitHub Actions deploy $env:GITHUB_SHA"
+            $changes = Get-Content "dist\steam-change-notes.txt" -Raw
           }
 
           & $gmpublish update `

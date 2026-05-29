@@ -4,10 +4,7 @@ on:
   pull_request:
   push:
     branches:
-      - master
       - main
-    tags:
-      - "v*"
   workflow_dispatch:
     inputs:
       version:
@@ -36,15 +33,18 @@ jobs:
           set -euo pipefail
 
           if [[ -n "${INPUT_VERSION}" ]]; then
-            version="${INPUT_VERSION}"
-          elif [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
-            version="${GITHUB_REF_NAME}"
+            version="${INPUT_VERSION#v}"
           else
-            version="v$(tr -d '[:space:]' < VERSION)"
+            version="$(tr -d '[:space:]' < VERSION)"
+            version="${version#v}"
           fi
 
-          archive="ttt_bomb_vest-${version}.zip"
+          tag="v${version}"
+          archive="ttt_bomb_vest-${tag}.zip"
           staging="dist/ttt_bomb_vest"
+
+          echo "RELEASE_VERSION=${version}" >> "${GITHUB_ENV}"
+          echo "RELEASE_TAG=${tag}" >> "${GITHUB_ENV}"
 
           rm -rf dist
           mkdir -p "${staging}"
@@ -61,15 +61,36 @@ jobs:
 
           echo "Built dist/${archive}"
 
+      - name: Generate release notes
+        run: node scripts/generate-release-notes.mjs
+
       - name: Upload package artifact
         uses: actions/upload-artifact@v4
         with:
           name: ttt_bomb_vest-package
-          path: dist/*.zip
+          path: |
+            dist/*.zip
+            dist/release-notes.md
+            dist/steam-change-notes.txt
           if-no-files-found: error
 
       - name: Publish GitHub Release
-        if: github.ref_type == 'tag'
+        if: github.event_name != 'pull_request'
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "${GITHUB_REF_NAME}" dist/*.zip --generate-notes
+        run: |
+          set -euo pipefail
+
+          if gh release view "${RELEASE_TAG}" >/dev/null 2>&1; then
+            gh release upload "${RELEASE_TAG}" dist/*.zip --clobber
+            gh release edit "${RELEASE_TAG}" \
+              --title "[TTT] Bomb Vest ${RELEASE_TAG}" \
+              --notes-file dist/release-notes.md \
+              --latest
+          else
+            gh release create "${RELEASE_TAG}" dist/*.zip \
+              --target "${GITHUB_SHA}" \
+              --title "[TTT] Bomb Vest ${RELEASE_TAG}" \
+              --notes-file dist/release-notes.md \
+              --latest
+          fi

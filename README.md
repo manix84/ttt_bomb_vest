@@ -106,10 +106,12 @@ Point editor integrations at `scripts/glualint.sh` if they allow a custom execut
 
 ### 📦 Release packaging
 
-GitHub Actions builds the installable package for pull requests and pushes. Pushing a `v*` tag publishes a GitHub Release with the package attached.
+GitHub Actions builds the installable package for pull requests. Merges into `main` publish a GitHub Release with the package attached.
 
 ## 🚀 Steam Workshop deployment
-The `Deploy to Steam Workshop` GitHub Actions workflow manually deploys the addon to Steam Workshop using Garry's Mod's `gmad` and `gmpublish` tools.
+Merges into `main` publish a GitHub Release and deploy to Steam Workshop. Both workflows generate matching release notes from the current `VERSION` and recent git history: Markdown for GitHub Releases, and Steam Workshop BBCode for Workshop change notes.
+
+The `Deploy to Steam Workshop` GitHub Actions workflow can also be run manually, using Garry's Mod's `gmad` and `gmpublish` tools.
 
 Required repository variable:
 - `STEAM_USERNAME`
