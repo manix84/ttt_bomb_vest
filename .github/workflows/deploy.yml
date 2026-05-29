@@ -101,18 +101,34 @@ jobs:
             throw "Decoded config.vdf is valid, but does not contain SteamCMD cached credentials. Recreate it from a successful local SteamCMD login for $env:STEAM_USERNAME."
           }
 
+          if ($configContent -notmatch [regex]::Escape($env:STEAM_USERNAME)) {
+            Write-Warning "STEAM_USERNAME was not found in config.vdf. Cached credentials may belong to a different account."
+          }
+
           $loginUsersContent = Get-Content $loginUsersPath -Raw
           if ($loginUsersContent -notmatch [regex]::Escape($env:STEAM_USERNAME)) {
-            Write-Warning "STEAM_USERNAME was not found in loginusers.vdf. Cached credentials may belong to a different account."
+            throw "loginusers.vdf does not reference $env:STEAM_USERNAME. Regenerate cached Steam login files for the correct account."
           }
 
           $loginArgs = @("+login", $env:STEAM_USERNAME)
+
+          & "$steamCmdDir\steamcmd.exe" `
+            @loginArgs `
+            +quit
+
+          if ($LASTEXITCODE -ne 0) {
+            throw "SteamCMD failed to log in using cached credentials. Regenerate STEAM_CONFIG_VDF_BASE64 and STEAM_LOGINUSERS_VDF_BASE64 from a fresh local SteamCMD login for $env:STEAM_USERNAME."
+          }
 
           & "$steamCmdDir\steamcmd.exe" `
             +force_install_dir "$garrysModDir" `
             @loginArgs `
             +app_update 4000 validate `
             +quit
+
+          if ($LASTEXITCODE -ne 0) {
+            throw "SteamCMD logged in with cached credentials but failed to install Garry's Mod tools with app_update 4000. Confirm the Steam account owns Garry's Mod and can install app 4000 through SteamCMD."
+          }
 
           "GARRYSMOD_DIR=$garrysModDir" >> $env:GITHUB_ENV
 
