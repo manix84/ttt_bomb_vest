@@ -120,18 +120,26 @@ Authentication repository secrets:
 - `STEAM_CONFIG_VDF_BASE64` - required. Base64-encoded SteamCMD `config/config.vdf` from a machine that has already completed Steam Guard.
 - `STEAM_LOGINUSERS_VDF_BASE64` - required. Base64-encoded SteamCMD `config/loginusers.vdf` from the same machine.
 
-To create the Steam auth secrets, log in once with SteamCMD on your own machine, approve the Steam Guard prompt, then base64 encode that SteamCMD install's auth files.
+To create the Steam auth secrets, log in once with SteamCMD on your own machine, approve the Steam Guard prompt, then make sure SteamCMD can log in again without asking for a password:
+
+```sh
+steamcmd +login manix84 +quit
+```
+
+If this prints `Cached credentials not found`, the local SteamCMD login did not create reusable cached credentials yet. Complete a successful interactive SteamCMD login before encoding the files.
+
+Then base64 encode that SteamCMD install's auth files.
 
 On macOS, copy `STEAM_CONFIG_VDF_BASE64`:
 
 ```sh
-base64 -i /path/to/steamcmd/config/config.vdf | tr -d '\n' | pbcopy
+base64 -e "$HOME/Library/Application Support/Steam/config/config.vdf" | tr -d '\n' | pbcopy
 ```
 
 Then copy `STEAM_LOGINUSERS_VDF_BASE64`:
 
 ```sh
-base64 -i /path/to/steamcmd/config/loginusers.vdf | tr -d '\n' | pbcopy
+base64 -e "$HOME/Library/Application Support/Steam/config/loginusers.vdf" | tr -d '\n' | pbcopy
 ```
 
 Paste each copied value into the matching repository secret.

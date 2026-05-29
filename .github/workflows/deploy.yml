@@ -57,17 +57,35 @@ jobs:
           Invoke-WebRequest "https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip" -OutFile $steamCmdZip
           Expand-Archive -Path $steamCmdZip -DestinationPath $steamCmdDir -Force
 
-          if (![string]::IsNullOrWhiteSpace($env:STEAM_CONFIG_VDF_BASE64)) {
-            $configDir = Join-Path $steamCmdDir "config"
-            New-Item -ItemType Directory -Force -Path $configDir | Out-Null
-            [IO.File]::WriteAllBytes(
-              (Join-Path $configDir "config.vdf"),
-              [Convert]::FromBase64String($env:STEAM_CONFIG_VDF_BASE64)
-            )
-            [IO.File]::WriteAllBytes(
-              (Join-Path $configDir "loginusers.vdf"),
-              [Convert]::FromBase64String($env:STEAM_LOGINUSERS_VDF_BASE64)
-            )
+          $configDir = Join-Path $steamCmdDir "config"
+          $configPath = Join-Path $configDir "config.vdf"
+          $loginUsersPath = Join-Path $configDir "loginusers.vdf"
+          New-Item -ItemType Directory -Force -Path $configDir | Out-Null
+          [IO.File]::WriteAllBytes(
+            $configPath,
+            [Convert]::FromBase64String($env:STEAM_CONFIG_VDF_BASE64)
+          )
+          [IO.File]::WriteAllBytes(
+            $loginUsersPath,
+            [Convert]::FromBase64String($env:STEAM_LOGINUSERS_VDF_BASE64)
+          )
+
+          if (!(Test-Path $configPath) -or (Get-Item $configPath).Length -eq 0) {
+            throw "config.vdf was not written successfully."
+          }
+
+          if (!(Test-Path $loginUsersPath) -or (Get-Item $loginUsersPath).Length -eq 0) {
+            throw "loginusers.vdf was not written successfully."
+          }
+
+          $configContent = Get-Content $configPath -Raw
+          if ($configContent -notmatch '"ConnectCache"') {
+            throw "config.vdf does not contain SteamCMD cached credentials. Log in locally with SteamCMD first, then recreate STEAM_CONFIG_VDF_BASE64."
+          }
+
+          $loginUsersContent = Get-Content $loginUsersPath -Raw
+          if ($loginUsersContent -notmatch [regex]::Escape($env:STEAM_USERNAME)) {
+            Write-Warning "STEAM_USERNAME was not found in loginusers.vdf. Cached credentials may belong to a different account."
           }
 
           $loginArgs = @("+login", $env:STEAM_USERNAME)
