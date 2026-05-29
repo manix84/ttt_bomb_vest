@@ -70,14 +70,23 @@ jobs:
           $configPath = Join-Path $configDir "config.vdf"
           $loginUsersPath = Join-Path $configDir "loginusers.vdf"
           New-Item -ItemType Directory -Force -Path $configDir | Out-Null
-          [IO.File]::WriteAllBytes(
-            $configPath,
-            [Convert]::FromBase64String($env:STEAM_CONFIG_VDF_BASE64)
-          )
-          [IO.File]::WriteAllBytes(
-            $loginUsersPath,
-            [Convert]::FromBase64String($env:STEAM_LOGINUSERS_VDF_BASE64)
-          )
+          try {
+            [IO.File]::WriteAllBytes(
+              $configPath,
+              [Convert]::FromBase64String($env:STEAM_CONFIG_VDF_BASE64)
+            )
+          } catch {
+            throw "STEAM_CONFIG_VDF_BASE64 is not valid base64."
+          }
+
+          try {
+            [IO.File]::WriteAllBytes(
+              $loginUsersPath,
+              [Convert]::FromBase64String($env:STEAM_LOGINUSERS_VDF_BASE64)
+            )
+          } catch {
+            throw "STEAM_LOGINUSERS_VDF_BASE64 is not valid base64."
+          }
 
           if (!(Test-Path $configPath) -or (Get-Item $configPath).Length -eq 0) {
             throw "config.vdf was not written successfully."
@@ -89,7 +98,7 @@ jobs:
 
           $configContent = Get-Content $configPath -Raw
           if ($configContent -notmatch '"ConnectCache"') {
-            throw "config.vdf does not contain SteamCMD cached credentials. Log in locally with SteamCMD first, then recreate STEAM_CONFIG_VDF_BASE64."
+            throw "Decoded config.vdf is valid, but does not contain SteamCMD cached credentials. Recreate it from a successful local SteamCMD login for $env:STEAM_USERNAME."
           }
 
           $loginUsersContent = Get-Content $loginUsersPath -Raw
