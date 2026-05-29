@@ -3,6 +3,8 @@
 
 > Walk into a crowded room. Click... 3, 2, 1, Boom!
 
+[![Deploy to Workshop](https://github.com/manix84/ttt-bomb-vest/actions/workflows/deploy.yml/badge.svg)](https://github.com/manix84/ttt-bomb-vest/actions/workflows/deploy.yml) [![Release](https://github.com/manix84/ttt-bomb-vest/actions/workflows/release.yml/badge.svg)](https://github.com/manix84/ttt-bomb-vest/actions/workflows/release.yml) 
+
 There is always a server of friends who have realised that grouping together is the best way to survive a round of TTT. This weapon lets Traitors take advantage of that, and perhaps teach your friends that it is not safe to group up like that any more.
 
 This is an alternative to the Jihad Bomb, which is incredibly popular in TTT. I wanted a version that fits better in mixed company, keeps the joke configurable, and gives servers more control over sounds, effects, and player preferences.
