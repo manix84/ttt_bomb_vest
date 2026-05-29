@@ -200,7 +200,8 @@ if SERVER then
   util.AddNetworkString(addon.AdminRequestMessage)
   util.AddNetworkString(addon.AdminStatusMessage)
 
-  resource.AddFile("materials/VGUI/ttt/icon_bomb_vest.vmt")
+  resource.AddFile("materials/vgui/ttt/icon_bomb_vest.vmt")
+  resource.AddFile("materials/vgui/ttt/icon_bomb_vest.vtf")
   resource.AddFile("sound/weapons/bomb_vest/explosion.wav")
   resource.AddFile("sound/weapons/bomb_vest/countdown.wav")
   resource.AddFile("sound/weapons/bomb_vest/countdown/dj_airhorn.mp3")
@@ -216,7 +217,7 @@ end
 if CLIENT then
   SWEP.PrintName = "Bomb Vest"
   SWEP.Slot = 8
-  SWEP.Icon = "VGUI/ttt/icon_bomb_vest"
+  SWEP.Icon = "vgui/ttt/icon_bomb_vest.vtf"
 end
 
 -- SWEP STUFF
