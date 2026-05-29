@@ -187,11 +187,11 @@ jobs:
           Copy-Item "$env:ADDON_GMA" (Join-Path $workshopContentDir "$env:ADDON_NAME.gma") -Force
 
           function ConvertTo-VdfValue([string] $value) {
-            return $value.Replace("\", "\\").Replace('"', '\"').Replace("`r`n", "\n").Replace("`n", "\n")
+            return $value.Replace("\", "\\").Replace('"', '\"')
           }
 
           $contentFolder = ConvertTo-VdfValue $workshopContentDir
-          $changeNote = ConvertTo-VdfValue $changes
+          $changeNote = ConvertTo-VdfValue (($changes -replace "`r`n", "`n").TrimEnd("`n"))
 
           @(
             '"workshopitem"',
