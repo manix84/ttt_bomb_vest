@@ -184,7 +184,15 @@ jobs:
             $changes = Get-Content "dist\steam-change-notes.txt" -Raw
           }
 
-          & $gmpublish update `
+          $gmpublishOutput = & $gmpublish update `
             -addon "$env:ADDON_GMA" `
             -id "$env:WORKSHOP_ITEM_ID" `
-            -changes "$changes"
+            -changes "$changes" 2>&1
+          $gmpublishExitCode = $LASTEXITCODE
+
+          $gmpublishOutput | ForEach-Object { Write-Host $_ }
+          $gmpublishText = $gmpublishOutput -join "`n"
+
+          if ($gmpublishExitCode -ne 0 -or $gmpublishText -match "(?m)^Error:" -or $gmpublishText -match "Couldn't initialize Steam") {
+            throw "gmpublish failed. The Garry's Mod publisher requires Steam to initialize; SteamCMD login alone is not enough for this tool on a headless GitHub runner."
+          }
